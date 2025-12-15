@@ -27,7 +27,7 @@ This repo is a learning playground to practice Angular, UI libraries, and relate
 - **i18n**: `ngx-translate` (runtime translations)
 - **Forms**: Reactive Forms (`@angular/forms`)
 - **Testing**:
-  - Unit: **Jest**
+  - Unit: **Jest** or **Karma + Jasmine**
   - E2E: **Cypress** (if needed)
 - **Build / Bundling**: Angular CLI (default)
 - **Package Managers**: npm
