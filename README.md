@@ -36,9 +36,9 @@ This repo is a learning playground to practice Angular, UI libraries, and relate
 ## Project Layout
 Each project lives in its own folder. Example structure:
 ```
-├─ project-1(To-Do-List-App)
-├─ project-2(Weather-App)
-├─ project-3(Currency-Converter-App)
+├─ project-1_To-Do-List-App
+├─ project-2_Weather-App
+├─ project-3_Currency-Converter-App
 └─ etc
 ```
 ---
