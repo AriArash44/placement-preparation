@@ -1,5 +1,10 @@
-<div class="flex gap-4 p-4 bg-gray-100">
-  <app-nav-button icon="/icons/list.svg" route=""></app-nav-button>
-  <app-nav-button icon="/icons/add.svg" route="add"></app-nav-button>
-</div>
-<router-outlet></router-outlet>
+<header class="h-1/12 border-b-2 mb-4">
+  <h1 class="text-2xl font-bold" [appUppercase]="pageTitle()"></h1>
+</header>
+<main class="flex justify-center items-center h-5/6 border-b-2 mb-4">
+  <router-outlet></router-outlet>
+</main>
+<footer class="flex justify-center gap-3 h-1/12">
+  <app-icon-button icon="/icons/list.svg" route="" (clicked)="goTo('')"></app-icon-button>
+  <app-icon-button icon="/icons/add.svg" route="add" (clicked)="goTo('/add')"></app-icon-button>
+</footer>
