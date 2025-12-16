@@ -1,5 +1,6 @@
 <button 
   (click)="onClick()" 
-  class="w-12 p-2 border rounded-full cursor-pointer bg-gray-50 hover:bg-gray-100">
-  <img [src]="icon" [alt]="route"/>
+  class="w-12 p-2 border dark:border-white rounded-full cursor-pointer bg-gray-50 
+  dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
+  <img [appThemeIcon]="icon" [alt]="route"/>
 </button>

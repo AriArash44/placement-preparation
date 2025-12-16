@@ -1,7 +1,9 @@
-<header class="h-1/12 border-b-2 mb-4">
-  <h1 class="text-2xl font-bold" [appUppercase]="pageTitle()"></h1>
+<header class="flex justify-between h-1/12 border-b-2 dark:border-white mb-4">
+  <h1 class="text-2xl font-bold dark:text-white" [appUppercase]="pageTitle()"></h1>
+  <app-switch-button [(isLeft)]="isLight" leftIcon="/icons/sun.svg" 
+  rightIcon="/icons/moon.svg" (valueChange)="onThemeChange()"></app-switch-button>
 </header>
-<main class="flex justify-center items-center h-5/6 border-b-2 mb-4">
+<main class="flex justify-center items-center h-5/6 border-b-2 dark:border-white mb-4">
   <router-outlet></router-outlet>
 </main>
 <footer class="flex justify-center gap-3 h-1/12">

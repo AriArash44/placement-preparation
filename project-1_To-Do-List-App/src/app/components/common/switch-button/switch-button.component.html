@@ -1,0 +1,6 @@
+<div class="flex justify-between items-center relative rounded-full border dark:border-white h-10 w-24 p-1" (click)="onSwitch()">
+  <div class="absolute rounded-full bg-gray-600 dark:bg-gray-300 h-8 w-8 transition-all duration-300 ease-in-out" 
+  [class.left-1]="isLeft" [class.left-15]="!isLeft"></div>
+  @if (leftIcon) {<img class="w-6 h-6 ml-1" [appThemeIcon]="leftIcon" [alt]="leftIcon">}
+  @if (rightIcon) {<img class="w-6 h-6 mr-1" [appThemeIcon]="rightIcon" [alt]="rightIcon">}
+</div>

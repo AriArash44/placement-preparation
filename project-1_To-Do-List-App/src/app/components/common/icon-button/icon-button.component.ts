@@ -1,8 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { SharedImports } from '../../../../shared-imports';
 
 @Component({
   selector: 'app-icon-button',
-  imports: [],
+  imports: [...SharedImports],
   templateUrl: './icon-button.component.html',
 })
 export class IconButtonComponent {
