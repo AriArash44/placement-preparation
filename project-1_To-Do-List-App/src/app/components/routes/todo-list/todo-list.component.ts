@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-todo-list',
   imports: [],
   templateUrl: './todo-list.component.html',
+  standalone: true,
 })
-export class TodoListComponent {
-
-}
+export class TodoListComponent {}
