@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, signal, effect } from '@angular/core';
 
 export type Theme = 'light' | 'dark';
 
 const THEME_KEY = 'app-theme';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThemeService {
-  private themeSubject = new BehaviorSubject<Theme>(this.getInitialTheme());
-  theme$ = this.themeSubject.asObservable();
+  private _theme = signal<Theme>(this.getInitialTheme());
+  theme = this._theme.asReadonly();
 
   constructor() {
-    this.applyTheme(this.themeSubject.value);
+    effect(() => {
+      this.applyTheme(this.theme());
+    });
   }
 
   private getInitialTheme(): Theme {
@@ -23,12 +24,11 @@ export class ThemeService {
 
   setTheme(theme: Theme): void {
     localStorage.setItem(THEME_KEY, theme);
-    this.themeSubject.next(theme);
-    this.applyTheme(theme);
+    this._theme.set(theme);
   }
 
   toggleTheme(): void {
-    const next = this.themeSubject.value === 'light' ? 'dark' : 'light';
+    const next = this.theme() === 'light' ? 'dark' : 'light';
     this.setTheme(next);
   }
 
@@ -39,9 +39,5 @@ export class ThemeService {
     } else {
       html.classList.remove('dark');
     }
-  }
-
-  get currentTheme(): Theme {
-    return this.themeSubject.value;
   }
 }

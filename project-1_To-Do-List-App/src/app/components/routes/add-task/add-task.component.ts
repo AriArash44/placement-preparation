@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-add-task',
   imports: [],
   templateUrl: './add-task.component.html',
+  standalone: true,
 })
-export class AddTaskComponent {
-
-}
+export class AddTaskComponent {}

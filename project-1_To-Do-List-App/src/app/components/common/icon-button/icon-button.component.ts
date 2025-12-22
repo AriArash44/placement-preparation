@@ -1,16 +1,17 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { SharedImports } from '../../../../shared-imports';
 
 @Component({
   selector: 'app-icon-button',
   imports: [...SharedImports],
   templateUrl: './icon-button.component.html',
+  standalone: true,
 })
 export class IconButtonComponent {
-  @Input() icon!: string;
-  @Input() route!: string;
-  @Output() clicked = new EventEmitter<void>();
-  
+  icon = input.required<string>();
+  route = input.required<string>();
+  clicked = output<void>();
+
   onClick() {
     this.clicked.emit();
   }

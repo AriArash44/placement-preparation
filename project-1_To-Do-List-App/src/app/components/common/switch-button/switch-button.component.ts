@@ -1,22 +1,21 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, model, input, output } from '@angular/core';
 import { SharedImports } from '../../../../shared-imports';
 
 @Component({
   selector: 'app-switch-button',
   templateUrl: './switch-button.component.html',
-  imports: [ ...SharedImports ]
+  imports: [ ...SharedImports ],
+  standalone: true,
 })
 export class SwitchButtonComponent {
-  @Input() isLeft!: boolean;
-  @Input() leftIcon?: string;
-  @Input() rightIcon?: string;
+  isLeft = model.required<boolean>();
+  leftIcon = input<string>();
+  rightIcon = input<string>();
 
-  @Output() valueChange = new EventEmitter<boolean>();
-  @Output() isLeftChange = new EventEmitter<boolean>();
+  valueChange = output<boolean>();
 
   onSwitch() {
-    this.isLeft = !this.isLeft;
-    this.valueChange.emit(this.isLeft);
-    this.isLeftChange.emit(this.isLeft);
+    this.isLeft.update(value => !value);
+    this.valueChange.emit(this.isLeft());
   }
 }
