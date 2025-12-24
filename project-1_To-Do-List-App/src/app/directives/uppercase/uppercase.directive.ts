@@ -1,14 +1,14 @@
-import { Directive, Input, ElementRef } from '@angular/core';
+import { Directive, input, ElementRef, effect } from '@angular/core';
 
 @Directive({
   selector: '[appUppercase]'
 })
 export class UppercaseDirective {
-  @Input('appUppercase') text: string = '';
+  text = input<string>('', {alias: "appUppercase"})
 
-  constructor(private el: ElementRef) { }
-
-  ngOnChanges() {
-    this.el.nativeElement.textContent = this.text.toUpperCase();
+  constructor(private el: ElementRef) {
+    effect(() => {
+      this.el.nativeElement.textContent = this.text().toUpperCase();
+    })
   }
 }

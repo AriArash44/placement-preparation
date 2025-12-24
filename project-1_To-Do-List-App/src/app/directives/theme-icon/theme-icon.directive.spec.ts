@@ -10,7 +10,7 @@ describe('ThemeIconDirective', () => {
       theme$: { subscribe: () => ({ unsubscribe: () => {} }) }
     } as unknown as ThemeService;
 
-    const directive = new ThemeIconDirective(mockEl, mockThemeService);
+    const directive = new ThemeIconDirective(mockEl);
     expect(directive).toBeTruthy();
   });
 });

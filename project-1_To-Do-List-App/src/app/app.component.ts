@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, signal, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { IconButtonComponent } from './components/common/icon-button/icon-button.component';
 import { SwitchButtonComponent } from './components/common/switch-button/switch-button.component';
@@ -6,7 +6,6 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { UppercaseDirective } from './directives/uppercase/uppercase.directive';
 import { ThemeService } from './services/theme/theme.service';
-import type { Theme } from './services/theme/theme.service';
 import { SharedImports } from '../shared-imports';
 
 @Component({
@@ -15,13 +14,14 @@ import { SharedImports } from '../shared-imports';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
+  private router = inject(Router); 
+  themeService = inject(ThemeService);
+
   pageTitle = signal<string>('TODO');
-  theme: Theme;
+  theme = this.themeService.theme();;
   isLight = computed(() => this.themeService.theme() === 'light');
 
-  constructor(private router: Router, public themeService: ThemeService) {
-    this.theme = this.themeService.theme();
-
+  constructor() {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
