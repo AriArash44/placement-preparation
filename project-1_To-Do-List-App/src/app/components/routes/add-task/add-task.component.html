@@ -1,1 +1,44 @@
-<p>add-task works!</p>
+<form class="flex flex-col w-[clamp(200px,50%,420px)] m-auto" #todoForm="ngForm" (ngSubmit)="onSubmit()">
+  <input appFocusVisible
+    type="text"
+    name="title"
+    [(ngModel)]="model.title"
+    placeholder="Title"
+    #titleCtrl="ngModel"
+    class="form-input"
+    required
+  />
+  @if (titleCtrl.invalid && titleCtrl.touched) {
+    <div class="text-red-500 text-sm"> Title is required </div>
+  }
+  <input appFocusVisible
+    type="date"
+    name="date"
+    [(ngModel)]="model.dateDeadLine"
+    #dateCtrl="ngModel"
+    required
+  />
+  @if (dateCtrl.invalid && dateCtrl.touched) {
+    <div class="text-red-500 text-sm"> dead-line date is required </div>
+  }
+  <input appFocusVisible
+    [ngxMatTimepicker]="picker"
+    name="time"
+    [(ngModel)]="model.timeDeadLine"
+    placeholder="Select time"
+    #timeCtrl="ngModel"
+    required
+  />
+  <ngx-mat-timepicker #picker></ngx-mat-timepicker>
+  @if (timeCtrl.invalid && timeCtrl.touched) {
+    <div class="text-red-500 text-sm"> dead-line time is required </div>
+  }
+  <textarea appFocusVisible
+    name="description"
+    [(ngModel)]="model.description"
+    placeholder="Description"
+    rows="5"
+  ></textarea>
+  <button type="submit" class="bg-gray-500 hover:bg-gray-600 cursor-pointer mt-6 rounded 
+  py-1.5 text-white dark:hover:bg-gray-300 dark:hover:text-gray-700 w-3/4 m-auto">Submit</button>
+</form>
