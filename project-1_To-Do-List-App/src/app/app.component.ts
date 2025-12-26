@@ -4,13 +4,13 @@ import { IconButtonComponent } from './components/common/icon-button/icon-button
 import { SwitchButtonComponent } from './components/common/switch-button/switch-button.component';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { UppercaseDirective } from './directives/uppercase/uppercase.directive';
 import { ThemeService } from './services/theme/theme.service';
 import { SharedImports } from '../shared-imports';
+import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, IconButtonComponent, UppercaseDirective, SwitchButtonComponent, ...SharedImports],
+  imports: [RouterOutlet, IconButtonComponent, SwitchButtonComponent, UpperCasePipe, ...SharedImports],
   templateUrl: './app.component.html',
 })
 export class AppComponent {

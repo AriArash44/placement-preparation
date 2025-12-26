@@ -1,3 +1,7 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+input {
+    @apply border rounded p-1 dark:border-white dark:text-white;
+}
