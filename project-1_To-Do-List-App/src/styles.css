@@ -4,7 +4,7 @@
 
 input,
 textarea {
-    @apply border rounded mt-3 py-1 px-2 dark:border-white dark:text-white;
+    @apply placeholder-gray-400 border border-black rounded mt-3 py-1 px-2 dark:border-white dark:text-white;
 }
 
 input:focus:not(.focus-visible),
@@ -15,4 +15,8 @@ textarea:focus:not(.focus-visible) {
 input.focus-visible:focus,
 textarea.focus-visible:focus {
     outline: 2px solid #3b82f6;
+}
+
+p {
+    @apply text-inherit dark:text-white;
 }

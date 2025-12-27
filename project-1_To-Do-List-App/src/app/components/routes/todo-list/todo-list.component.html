@@ -1,1 +1,9 @@
-<p>todo list works properly</p>
+@for (todo of todos(); track todo.id) {
+  <p>{{ todo.title }}</p>
+  <p>{{ todo.dateDeadLine }}</p>
+  <p>{{ todo.timeDeadLine }}</p>
+  <p>{{ todo.description }}</p>
+
+} @empty {
+  <p>no todo available</p>
+}

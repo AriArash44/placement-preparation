@@ -1,16 +1,9 @@
-import { Component } from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { FocusVisibleDirective } from '../../../directives/focus-visible/focus-visible.directive';
-
-class AddTodoFormFeilds {
-  constructor(    
-    public title: string,    
-    public dateDeadLine: string,
-    public timeDeadLine: string,
-    public description?: string,    
-  ) {}
-}
+import { db, Todo } from '../../../services/db/todo-db.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-task',
@@ -22,8 +15,13 @@ class AddTodoFormFeilds {
   }
 })
 export class AddTaskComponent {
-  model = new AddTodoFormFeilds('', '', '', '');
-  onSubmit() { 
-    console.log('Form submitted:', this.model); 
+  model: Todo = { title: '', dateDeadLine: '', timeDeadLine: '', description: '' };
+
+  private toastr = inject(ToastrService);
+
+  async onSubmit(todoForm: NgForm) { 
+    await db.todos.add({...this.model}); 
+    todoForm.resetForm();
+    this.toastr.success('Task saved successfully!', 'Success');
   }
 }
