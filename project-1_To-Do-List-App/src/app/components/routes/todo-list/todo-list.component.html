@@ -9,8 +9,12 @@
           <span>{{ todo.dateDeadLine | date:'d/M/yy' }},&nbsp;&nbsp;{{ todo.timeDeadLine }}</span>
         </mat-panel-description>
         <mat-action-row class="gap-1 ml-1 border-t-0!">
-          <button matButton><span class="material-icons text-xl!">update</span></button>
-          <button matButton><span class="material-icons text-xl!">delete</span></button>
+          <button matButton (click)="showUpdateOrDelete('update', $event)"  class="cursor-pointer">
+            <span class="material-icons text-xl!">update</span>
+          </button>
+          <button matButton (click)="showUpdateOrDelete('delete', $event)" class="cursor-pointer">
+            <span class="material-icons text-xl!">delete</span>
+          </button>
         </mat-action-row>
       </mat-expansion-panel-header>
       <div class="border-t border-gray-200 w-full pt-2">
@@ -25,3 +29,14 @@
     <p>no todo available</p>
   }
 </mat-accordion>
+
+<app-modal [(isOpened)]="modalControler">
+  <ng-container [ngTemplateOutlet]="modalContent()"></ng-container>
+</app-modal>
+
+<ng-template #deleteFragment>
+  <p>This is a delete template fragment</p>
+</ng-template>
+<ng-template #updateFragment>
+  <p>This is an update template fragment</p>
+</ng-template>

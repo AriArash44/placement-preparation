@@ -1,13 +1,15 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, computed, inject, viewChild } from '@angular/core';
 import { db, Todo } from '../../../services/db/todo-db.service';
 import { liveQuery } from 'dexie';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { DatePipe } from '@angular/common';
+import { DatePipe, CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Modal } from '../../common/modal/modal.component';
+import { TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-todo-list',
-  imports: [MatExpansionModule, DatePipe],
+  imports: [MatExpansionModule, DatePipe, Modal, CommonModule],
   templateUrl: './todo-list.component.html',
   standalone: true,
   host:{
@@ -17,6 +19,17 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 export class TodoListComponent {
   todos = signal<Todo[]>([]);
   isSmallScreen = signal(false);
+  modalControler = signal(false);
+  currentTemplate = signal<"delete" | "update">("delete");
+
+  deleteFragment = viewChild<TemplateRef<unknown>>('deleteFragment');    
+  updateFragment = viewChild<TemplateRef<unknown>>('updateFragment');
+
+  modalContent = computed(() =>
+    this.currentTemplate() === 'delete'
+      ? this.deleteFragment()
+      : this.updateFragment()
+  );
 
   private breakpointObserver = inject(BreakpointObserver);
 
@@ -32,5 +45,11 @@ export class TodoListComponent {
       .subscribe(result => { 
         this.isSmallScreen.set(result.matches); 
       }); 
+  }
+
+  showUpdateOrDelete(type: "delete" | "update", event: Event) {
+    event.stopPropagation();
+    this.currentTemplate.set(type);
+    this.modalControler.set(true);
   }
 }
