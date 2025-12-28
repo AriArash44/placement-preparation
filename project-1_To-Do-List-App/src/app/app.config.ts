@@ -14,7 +14,7 @@ export const appConfig: ApplicationConfig = {
       BrowserAnimationsModule,
       ToastrModule.forRoot({ 
         timeOut: 3000, 
-        toastClass: 'bg-lime-600 rounded text-white fixed w-auto py-2 px-4 top-6 left-6'
+        toastClass: 'ngx-toastr rounded text-white fixed w-auto py-2 px-4 top-6 left-6'
       })
     )
   ]

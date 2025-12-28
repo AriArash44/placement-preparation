@@ -20,3 +20,6 @@ textarea.focus-visible:focus {
 p {
     @apply text-inherit dark:text-white;
 }
+
+.toast-error { @apply bg-rose-500; } 
+.toast-success { @apply bg-lime-600; }

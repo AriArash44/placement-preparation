@@ -2,7 +2,8 @@
   <input appFocusVisible
     type="text"
     name="title"
-    [(ngModel)]="model.title"
+    [ngModel]="model().title"
+    (ngModelChange)="updateField('title', $event)"
     placeholder="Title"
     #titleCtrl="ngModel"
     class="form-input"
@@ -15,7 +16,8 @@
     [class]="[dateCtrl.value ? 'text-black' : 'text-gray-400', 'border-inherit']"
     type="date"
     name="date"
-    [(ngModel)]="model.dateDeadLine"
+    [ngModel]="model().dateDeadLine"
+    (ngModelChange)="updateField('dateDeadLine', $event)"
     #dateCtrl="ngModel"
     required
   />
@@ -26,7 +28,8 @@
     [ngxMatTimepicker]="picker"
     name="time"
     class="placeholder-gray-400"
-    [(ngModel)]="model.timeDeadLine"
+    [ngModel]="model().timeDeadLine"
+    (ngModelChange)="updateField('timeDeadLine', $event)"
     placeholder="Select time"
     #timeCtrl="ngModel"
     required
@@ -37,7 +40,8 @@
   }
   <textarea appFocusVisible
     name="description"
-    [(ngModel)]="model.description"
+    [ngModel]="model().description"
+    (ngModelChange)="updateField('description', $event)"
     placeholder="Description"
     rows="5"
   ></textarea>
