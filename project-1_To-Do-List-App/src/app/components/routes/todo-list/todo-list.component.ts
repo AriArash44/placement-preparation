@@ -21,6 +21,7 @@ export class TodoListComponent {
   isSmallScreen = signal(false);
   modalControler = signal(false);
   currentTemplate = signal<"delete" | "update">("delete");
+  selectedTodo = signal<Todo | null>(null);
 
   deleteFragment = viewChild<TemplateRef<unknown>>('deleteFragment');    
   updateFragment = viewChild<TemplateRef<unknown>>('updateFragment');
@@ -30,6 +31,8 @@ export class TodoListComponent {
       ? this.deleteFragment()
       : this.updateFragment()
   );
+
+  modalContext = computed(() => ({ $implicit: this.selectedTodo() }));
 
   private breakpointObserver = inject(BreakpointObserver);
 
@@ -47,9 +50,18 @@ export class TodoListComponent {
       }); 
   }
 
-  showUpdateOrDelete(type: "delete" | "update", event: Event) {
+  showUpdateOrDelete(type: "delete" | "update", todo: Todo, event: Event) {
     event.stopPropagation();
     this.currentTemplate.set(type);
+    this.selectedTodo.set(todo);
     this.modalControler.set(true);
   }
+
+  async deleteTodo(id: number) {
+    if (id == null) return;
+    await db.todos.delete(id);
+    this.modalControler.set(false);
+    this.selectedTodo.set(null);
+  }
+
 }

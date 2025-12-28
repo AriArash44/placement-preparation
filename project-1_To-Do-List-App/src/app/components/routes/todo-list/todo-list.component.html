@@ -9,10 +9,10 @@
           <span>{{ todo.dateDeadLine | date:'d/M/yy' }},&nbsp;&nbsp;{{ todo.timeDeadLine }}</span>
         </mat-panel-description>
         <mat-action-row class="gap-1 ml-1 border-t-0!">
-          <button matButton (click)="showUpdateOrDelete('update', $event)"  class="cursor-pointer">
+          <button matButton (click)="showUpdateOrDelete('update', todo, $event)"  class="cursor-pointer">
             <span class="material-icons text-xl!">update</span>
           </button>
-          <button matButton (click)="showUpdateOrDelete('delete', $event)" class="cursor-pointer">
+          <button matButton (click)="showUpdateOrDelete('delete', todo, $event)" class="cursor-pointer">
             <span class="material-icons text-xl!">delete</span>
           </button>
         </mat-action-row>
@@ -31,12 +31,19 @@
 </mat-accordion>
 
 <app-modal [(isOpened)]="modalControler">
-  <ng-container [ngTemplateOutlet]="modalContent()"></ng-container>
+  <ng-container [ngTemplateOutlet]="modalContent()" [ngTemplateOutletContext]="modalContext()"></ng-container>
 </app-modal>
 
-<ng-template #deleteFragment>
-  <p>This is a delete template fragment</p>
+<ng-template #deleteFragment let-todo>
+  @if (modalControler()) {
+    <div class="flex flex-col items-center gap-4 w-[clamp(200px,35vw,500px)] m-auto">
+      <p>Are you sure you want to delete <strong>{{ todo.title }}</strong>?</p>
+      <button (click)="deleteTodo(todo.id)"
+      class="bg-rose-600 text-white px-3 py-1.5 w-auto rounded">delete permanently</button>
+    </div>
+  }
 </ng-template>
+
 <ng-template #updateFragment>
   <p>This is an update template fragment</p>
 </ng-template>
