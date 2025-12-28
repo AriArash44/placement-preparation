@@ -1,9 +1,21 @@
-@for (todo of todos(); track todo.id) {
-  <p>{{ todo.title }}</p>
-  <p>{{ todo.dateDeadLine }}</p>
-  <p>{{ todo.timeDeadLine }}</p>
-  <p>{{ todo.description }}</p>
-
-} @empty {
-  <p>no todo available</p>
-}
+<mat-accordion>
+  @for (todo of todos(); track todo.id) {
+    <mat-expansion-panel [disabled]="!todo.description">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="text-xl font-medium">
+          {{ todo.title }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ todo.dateDeadLine }} {{ todo.timeDeadLine }}
+        </mat-panel-description>
+        <mat-action-row class="gap-1 ml-1 border-t-0!">
+          <button matButton><span class="material-icons text-xl!">update</span></button>
+          <button matButton><span class="material-icons text-xl!">delete</span></button>
+        </mat-action-row>
+      </mat-expansion-panel-header>
+      <div class="border-t border-gray-200 w-full pt-2">{{ todo.description }}</div>
+    </mat-expansion-panel>
+  } @empty {
+    <p>no todo available</p>
+  }
+</mat-accordion>

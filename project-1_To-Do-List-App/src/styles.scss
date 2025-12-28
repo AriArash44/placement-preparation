@@ -1,0 +1,7 @@
+@use '@angular/material' as mat;
+
+.dark {
+  @include mat.expansion-overrides((
+    container-background-color: #d5d5d5,
+  ));
+}
