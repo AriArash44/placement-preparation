@@ -56,9 +56,16 @@ export class AddTaskComponent {
       this.toastr.error('Please fill all the reqired fields!', 'Error'); 
       return;
     }
-    await db.todos.add({...this.model()}); 
-    todoForm.resetForm();
-    this.model.set({ title: '', dateDeadLine: '', timeDeadLine: '', description: '' });
-    this.toastr.success('Task saved successfully!', 'Success');
+
+    if (!this.isEditMode()) {
+      await db.todos.add({...this.model()}); 
+      todoForm.resetForm();
+      this.model.set({ title: '', dateDeadLine: '', timeDeadLine: '', description: '' });
+      this.toastr.success('Task saved successfully!', 'Success');
+    }
+    else {
+      await db.todos.update(this.todoId()!, { ...this.model() });
+      this.toastr.success('Task updated successfully!', 'Success');
+    }
   }
 }
