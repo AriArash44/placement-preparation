@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, effect } from '@angular/core';
+import { Component, inject, signal, computed, input, effect } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { FocusVisibleDirective } from '../../../directives/focus-visible/focus-visible.directive';
@@ -16,13 +16,34 @@ import _ from 'lodash';
   }
 })
 export class AddTaskComponent {
-  model = signal({ title: '', dateDeadLine: '', timeDeadLine: '', description: '' }, {equal: _.isEqual});
+  todoId = input<number>();
+  model = signal({ title: '', dateDeadLine: '', timeDeadLine: '', description: '' }, { equal: _.isEqual });
   hasUnsavedChanges = computed(() => { 
     const m = this.model(); 
     return !!(m.title || m.dateDeadLine || m.timeDeadLine || m.description); 
   });
 
-  constructor() { effect(() => { console.log(this.model()); }); }
+  isEditMode = computed(() => !!this.todoId());
+
+  constructor() {
+    effect(() => {
+      if (this.todoId()) {
+        db.todos.get(this.todoId()!).then(todo => {
+          if (todo) {
+            console.log(todo)
+            this.model.set({
+            title: todo.title,
+            dateDeadLine: todo.dateDeadLine,
+            timeDeadLine: todo.timeDeadLine,
+            description: todo.description || ''
+          });
+          }
+        }).catch(error => {
+          console.error('Error fetching todo:', error);
+        });
+      }
+    })
+  }
 
   private toastr = inject(ToastrService);
 

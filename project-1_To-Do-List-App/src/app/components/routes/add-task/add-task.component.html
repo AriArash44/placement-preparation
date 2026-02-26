@@ -6,14 +6,18 @@
     (ngModelChange)="updateField('title', $event)"
     placeholder="Title"
     #titleCtrl="ngModel"
-    class="form-input"
+    class="form-input text-black! border-black!"
+    [class.text-black!]="isEditMode()"
+    [class.border-black!]="isEditMode()"
     required
   />
   @if (titleCtrl.invalid && titleCtrl.touched) {
     <div class="text-red-500 text-sm"> Title is required </div>
   }
   <input appFocusVisible
-    [class]="[dateCtrl.value ? 'text-black' : 'text-gray-400', 'border-inherit']"
+    class="text-black! border-black!"
+    [class.text-black!]="isEditMode()"
+    [class.border-black!]="isEditMode()"
     type="date"
     name="date"
     [ngModel]="model().dateDeadLine"
@@ -27,7 +31,9 @@
   <input appFocusVisible
     [ngxMatTimepicker]="picker"
     name="time"
-    class="placeholder-gray-400"
+    class="text-black! border-black! placeholder-gray-400"
+    [class.text-black!]="isEditMode()"
+    [class.border-black!]="isEditMode()"
     [ngModel]="model().timeDeadLine"
     (ngModelChange)="updateField('timeDeadLine', $event)"
     placeholder="Select time"
@@ -40,6 +46,9 @@
   }
   <textarea appFocusVisible
     name="description"
+    class="text-black! border-black! placeholder-gray-400"
+    [class.text-black!]="isEditMode()"
+    [class.border-black!]="isEditMode()"
     [ngModel]="model().description"
     (ngModelChange)="updateField('description', $event)"
     placeholder="Description"

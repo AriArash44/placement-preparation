@@ -44,6 +44,11 @@
   }
 </ng-template>
 
-<ng-template #updateFragment>
-  <p>This is an update template fragment</p>
+<ng-template #updateFragment let-todo>
+  @if (modalControler()) {
+    <div class="flex flex-col items-center gap-4 w-[clamp(200px,35vw,500px)] m-auto p-3">
+      <p class="text-black! text-center">Update fields of <strong>{{ todo.title }}</strong></p>
+      <app-add-task [todoId]="todo.id"/>
+    </div>
+  }
 </ng-template>

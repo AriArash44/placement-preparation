@@ -7,10 +7,12 @@ import { DatePipe, CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Modal } from '../../common/modal/modal.component';
 import { TemplateRef } from '@angular/core';
+import { AddTaskComponent } from '../add-task/add-task.component';
 
 @Component({
   selector: 'app-todo-list',
-  imports: [MatExpansionModule, DatePipe, Modal, CommonModule, CdkDrag, CdkDropList],
+  imports: [AddTaskComponent, MatExpansionModule, DatePipe, 
+    Modal, CommonModule, CdkDrag, CdkDropList],
   templateUrl: './todo-list.component.html',
   standalone: true,
   host:{
