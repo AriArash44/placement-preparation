@@ -2,6 +2,7 @@ import { Component, signal, computed, inject, viewChild } from '@angular/core';
 import { db, Todo } from '../../../services/db/todo-db.service';
 import { liveQuery } from 'dexie';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray} from '@angular/cdk/drag-drop';
 import { DatePipe, CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Modal } from '../../common/modal/modal.component';
@@ -9,7 +10,7 @@ import { TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-todo-list',
-  imports: [MatExpansionModule, DatePipe, Modal, CommonModule],
+  imports: [MatExpansionModule, DatePipe, Modal, CommonModule, CdkDrag, CdkDropList],
   templateUrl: './todo-list.component.html',
   standalone: true,
   host:{
@@ -64,4 +65,9 @@ export class TodoListComponent {
     this.selectedTodo.set(null);
   }
 
+  drop(event: CdkDragDrop<string[]>) {
+    const currentTodos = this.todos();
+    moveItemInArray(currentTodos, event.previousIndex, event.currentIndex);
+    this.todos.set(currentTodos);
+  }
 }

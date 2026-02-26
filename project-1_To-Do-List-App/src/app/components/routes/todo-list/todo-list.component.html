@@ -1,6 +1,6 @@
-<mat-accordion>
+<mat-accordion cdkDropList (cdkDropListDropped)="drop($event)">
   @for (todo of todos(); track todo.id) {
-    <mat-expansion-panel [disabled]="!isSmallScreen() && !todo.description">
+    <mat-expansion-panel [disabled]="!isSmallScreen() && !todo.description" cdkDrag>
       <mat-expansion-panel-header>
         <mat-panel-title class="text-xl font-medium">
           {{ todo.title }}
@@ -37,7 +37,7 @@
 <ng-template #deleteFragment let-todo>
   @if (modalControler()) {
     <div class="flex flex-col items-center gap-4 w-[clamp(200px,35vw,500px)] m-auto">
-      <p>Are you sure you want to delete <strong>{{ todo.title }}</strong>?</p>
+      <p class="text-black!">Are you sure you want to delete <strong>{{ todo.title }}</strong>?</p>
       <button (click)="deleteTodo(todo.id)"
       class="bg-rose-600 text-white px-3 py-1.5 w-auto rounded">delete permanently</button>
     </div>
