@@ -9,7 +9,7 @@
           <span>{{ todo.dateDeadLine | date:'d/M/yy' }},&nbsp;&nbsp;{{ todo.timeDeadLine }}</span>
         </mat-panel-description>
         <mat-action-row class="gap-1 ml-1 border-t-0!">
-          <button matButton (click)="showUpdateOrDelete('update', todo, $event)"  class="cursor-pointer">
+          <button matButton (click)="showUpdateOrDelete('update', todo, $event)" class="cursor-pointer">
             <span class="material-icons text-xl!">update</span>
           </button>
           <button matButton (click)="showUpdateOrDelete('delete', todo, $event)" class="cursor-pointer">
@@ -26,7 +26,7 @@
       </div>
     </mat-expansion-panel>
   } @empty {
-    <p>no todo available</p>
+    <p class="w-full text-center text-2xl">no todo available</p>
   }
 </mat-accordion>
 

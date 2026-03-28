@@ -50,6 +50,7 @@ export class TodoListComponent {
       .observe([Breakpoints.Small, Breakpoints.XSmall]) 
       .subscribe(result => { 
         this.isSmallScreen.set(result.matches); 
+        console.log(this.isSmallScreen);
       }); 
   }
 

@@ -54,6 +54,18 @@
     placeholder="Description"
     rows="5"
   ></textarea>
+  @if (isEditMode()) {
+    <div class="flex items-center gap-3">
+      <label for="done">is it done?</label>
+      <input
+        id="done"
+        type="checkbox"
+        [checked]="model().state === 'done'"
+        (change)="toggleDone($event)"
+        class="mt-1.5!"
+      />
+    </div>
+  }
   <button type="submit" class="bg-gray-500 hover:bg-gray-600 cursor-pointer mt-6 rounded 
   py-1.5 text-white dark:hover:bg-gray-300 dark:hover:text-gray-700 w-3/4 m-auto">Submit</button>
 </form>

@@ -7,6 +7,7 @@ export interface Todo {
   dateDeadLine: string; 
   timeDeadLine: string; 
   description?: string; 
+  state: 'in_progress' | 'done' | 'overdue';
 }
 
 @Injectable({
@@ -18,7 +19,7 @@ export class TodoDB extends Dexie {
   constructor() { 
     super('TodoDB'); 
     this.version(1).stores({ 
-      todos: '++id,title,dateDeadLine,timeDeadLine,description' 
+      todos: '++id,title,dateDeadLine,timeDeadLine,description,state' 
     }); 
   }
 }
