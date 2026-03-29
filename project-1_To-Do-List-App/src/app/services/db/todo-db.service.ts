@@ -8,6 +8,7 @@ export interface Todo {
   timeDeadLine: string; 
   description?: string; 
   state: 'in_progress' | 'done' | 'overdue';
+  notified: boolean;
 }
 
 @Injectable({

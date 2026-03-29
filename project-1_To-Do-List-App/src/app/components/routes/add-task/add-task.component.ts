@@ -17,7 +17,10 @@ import _ from 'lodash';
 })
 export class AddTaskComponent {
   todoId = input<number>();
-  model = signal<Todo>({ title: '', dateDeadLine: '', timeDeadLine: '', description: '', state: 'in_progress' }, { equal: _.isEqual });
+  model = signal<Todo>(
+    { title: '', dateDeadLine: '', timeDeadLine: '', description: '', state: 'in_progress', notified: false }, 
+    { equal: _.isEqual }
+  );
   hasUnsavedChanges = computed(() => { 
     const m = this.model(); 
     return !!(m.title || m.dateDeadLine || m.timeDeadLine || m.description); 
@@ -30,14 +33,14 @@ export class AddTaskComponent {
       if (this.todoId()) {
         db.todos.get(this.todoId()!).then(todo => {
           if (todo) {
-            console.log(todo)
             this.model.set({
-            title: todo.title,
-            dateDeadLine: todo.dateDeadLine,
-            timeDeadLine: todo.timeDeadLine,
-            description: todo.description || '',
-            state: 'in_progress'
-          });
+              title: todo.title,
+              dateDeadLine: todo.dateDeadLine,
+              timeDeadLine: todo.timeDeadLine,
+              description: todo.description || '',
+              state: todo.state,
+              notified: false
+            });
           }
         }).catch(error => {
           console.error('Error fetching todo:', error);
@@ -61,7 +64,9 @@ export class AddTaskComponent {
     if (!this.isEditMode()) {
       await db.todos.add({...this.model()}); 
       todoForm.resetForm();
-      this.model.set({ title: '', dateDeadLine: '', timeDeadLine: '', description: '', state: 'in_progress' });
+      this.model.set(
+        { title: '', dateDeadLine: '', timeDeadLine: '', description: '', state: 'in_progress', notified: false }
+      );
       this.toastr.success('Task saved successfully!', 'Success');
     }
     else {

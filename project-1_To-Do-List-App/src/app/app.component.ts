@@ -29,6 +29,9 @@ export class AppComponent {
       .subscribe((event: NavigationEnd) => {
         this.pageTitle.set(event.urlAfterRedirects === '/add' ? 'add' : 'todo');
       });
+    if ('Notification' in window) {
+      Notification.requestPermission();
+    }
   }
 
   goTo(route: string) {
