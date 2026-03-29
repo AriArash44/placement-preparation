@@ -1,0 +1,14 @@
+{
+  "name": "project-1_To-Do-List-App",
+  "short_name": "project-1_To-Do-List-App",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./",
+  "icons": [
+    {
+      "src": "./favicon.png",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}

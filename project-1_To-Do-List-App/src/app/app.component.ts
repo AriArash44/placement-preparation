@@ -7,6 +7,7 @@ import { filter } from 'rxjs/operators';
 import { ThemeService } from './services/theme/theme.service';
 import { SharedImports } from '../shared-imports';
 import { UpperCasePipe } from '@angular/common';
+import { DeadlineWatcherService } from './services/deadline/deadline-watcher';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ import { UpperCasePipe } from '@angular/common';
 export class AppComponent {
   private router = inject(Router); 
   themeService = inject(ThemeService);
+  deadlineWatcherService = inject(DeadlineWatcherService);
 
   pageTitle = signal<string>('TODO');
   theme = this.themeService.theme();;

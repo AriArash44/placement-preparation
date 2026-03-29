@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, input, effect, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, signal, computed, input, effect } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { FocusVisibleDirective } from '../../../directives/focus-visible/focus-visible.directive';
@@ -15,7 +15,7 @@ import _ from 'lodash';
     class: "w-full"
   }
 })
-export class AddTaskComponent implements OnInit, OnDestroy {
+export class AddTaskComponent {
   todoId = input<number>();
   model = signal<Todo>({ title: '', dateDeadLine: '', timeDeadLine: '', description: '', state: 'in_progress' }, { equal: _.isEqual });
   hasUnsavedChanges = computed(() => { 
@@ -44,27 +44,6 @@ export class AddTaskComponent implements OnInit, OnDestroy {
         });
       }
     })
-  }
-
-  private deadlineChecker?: ReturnType<typeof setInterval>;
-
-  ngOnInit() {
-    this.deadlineChecker = setInterval(async () => {
-      const todos = await db.todos.toArray();
-      for (const todo of todos) {
-        if (todo.state === 'done') continue;
-        const deadline = new Date(`${todo.dateDeadLine}T${todo.timeDeadLine}`);
-        if (new Date() > deadline) {
-          await db.todos.update(todo.id!, { state: 'overdue' });
-        }
-      }
-    }, 60000);
-  }
-
-  ngOnDestroy(): void {
-    if (this.deadlineChecker) {
-      clearInterval(this.deadlineChecker);
-    }
   }
 
   private toastr = inject(ToastrService);

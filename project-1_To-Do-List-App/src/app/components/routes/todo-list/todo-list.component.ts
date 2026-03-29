@@ -47,10 +47,9 @@ export class TodoListComponent {
 
   ngOnInit() { 
     this.breakpointObserver
-      .observe([Breakpoints.Small, Breakpoints.XSmall]) 
+      .observe([Breakpoints.XSmall]) 
       .subscribe(result => { 
         this.isSmallScreen.set(result.matches); 
-        console.log(this.isSmallScreen);
       }); 
   }
 
