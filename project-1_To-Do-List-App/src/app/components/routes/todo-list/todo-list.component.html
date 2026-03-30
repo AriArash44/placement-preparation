@@ -1,7 +1,8 @@
 <mat-accordion cdkDropList (cdkDropListDropped)="drop($event)">
   @for (todo of todos(); track todo.id) {
     <mat-expansion-panel [disabled]="!isSmallScreen() && !todo.description" cdkDrag>
-      <mat-expansion-panel-header>
+      <mat-expansion-panel-header [class]="todo.state === 'done' ? 'bg-green-300 dark:bg-green-600' : 
+      (todo.state === 'overdue' ? 'bg-red-300 dark:bg-red-600' : '')">
         <mat-panel-title class="text-xl font-medium">
           {{ todo.title }}
         </mat-panel-title>

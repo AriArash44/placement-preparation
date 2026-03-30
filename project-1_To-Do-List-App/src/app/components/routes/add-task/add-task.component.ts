@@ -3,6 +3,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { FocusVisibleDirective } from '../../../directives/focus-visible/focus-visible.directive';
 import { db, Todo } from '../../../services/db/todo-db.service';
+import { DeadlineWatcherService } from '../../../services/deadline/deadline-watcher';
 import { ToastrService } from 'ngx-toastr';
 import _ from 'lodash';
 
@@ -27,6 +28,7 @@ export class AddTaskComponent {
   });
 
   isEditMode = computed(() => !!this.todoId());
+  deadlineWatcherService = inject(DeadlineWatcherService);
 
   constructor() {
     effect(() => {
@@ -38,7 +40,7 @@ export class AddTaskComponent {
               dateDeadLine: todo.dateDeadLine,
               timeDeadLine: todo.timeDeadLine,
               description: todo.description || '',
-              state: todo.state,
+              state: todo.state === "overdue" ? "in_progress" : todo.state,
               notified: false
             });
           }
@@ -73,16 +75,8 @@ export class AddTaskComponent {
       await db.todos.update(this.todoId()!, { ...this.model() });
       this.toastr.success('Task updated successfully!', 'Success');
     }
-  }
 
-  checkDeadline(todo: Todo): Todo["state"] {
-    if (todo.state === 'done') return 'done';
-    const deadline = new Date(`${todo.dateDeadLine}T${todo.timeDeadLine}`);
-    const now = new Date();
-    if (now > deadline) {
-      return 'overdue';
-    }
-    return 'in_progress';
+    this.deadlineWatcherService.checkOverdueOrNotif();
   }
 
   toggleDone(event: Event) {
