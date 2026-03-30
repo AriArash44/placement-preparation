@@ -2,7 +2,7 @@ import { Component, inject, signal, computed, input, effect } from '@angular/cor
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { FocusVisibleDirective } from '../../../directives/focus-visible/focus-visible.directive';
-import { db, Todo } from '../../../services/db/todo-db.service';
+import { TodoDB, Todo } from '../../../services/db/todo-db.service';
 import { DeadlineWatcherService } from '../../../services/deadline/deadline-watcher';
 import { ToastrService } from 'ngx-toastr';
 import _ from 'lodash';
@@ -29,11 +29,12 @@ export class AddTaskComponent {
 
   isEditMode = computed(() => !!this.todoId());
   deadlineWatcherService = inject(DeadlineWatcherService);
+  private db = inject(TodoDB);
 
   constructor() {
     effect(() => {
       if (this.todoId()) {
-        db.todos.get(this.todoId()!).then(todo => {
+        this.db.todos.get(this.todoId()!).then(todo => {
           if (todo) {
             this.model.set({
               title: todo.title,
@@ -64,7 +65,7 @@ export class AddTaskComponent {
     }
 
     if (!this.isEditMode()) {
-      await db.todos.add({...this.model()}); 
+      await this.db.todos.add({...this.model()}); 
       todoForm.resetForm();
       this.model.set(
         { title: '', dateDeadLine: '', timeDeadLine: '', description: '', state: 'in_progress', notified: false }
@@ -72,7 +73,7 @@ export class AddTaskComponent {
       this.toastr.success('Task saved successfully!', 'Success');
     }
     else {
-      await db.todos.update(this.todoId()!, { ...this.model() });
+      await this.db.todos.update(this.todoId()!, { ...this.model() });
       this.toastr.success('Task updated successfully!', 'Success');
     }
 

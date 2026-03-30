@@ -1,5 +1,5 @@
 import { Component, signal, computed, inject, viewChild } from '@angular/core';
-import { db, Todo } from '../../../services/db/todo-db.service';
+import { TodoDB, Todo } from '../../../services/db/todo-db.service';
 import { liveQuery } from 'dexie';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray} from '@angular/cdk/drag-drop';
@@ -38,9 +38,10 @@ export class TodoListComponent {
   modalContext = computed(() => ({ $implicit: this.selectedTodo() }));
 
   private breakpointObserver = inject(BreakpointObserver);
+  private db = inject(TodoDB);
 
   constructor() { 
-    liveQuery(() => db.todos.toArray()).subscribe(all => {
+    liveQuery(() => this.db.todos.toArray()).subscribe(all => {
       this.todos.set(all);
     }); 
   }
@@ -62,7 +63,7 @@ export class TodoListComponent {
 
   async deleteTodo(id: number) {
     if (id == null) return;
-    await db.todos.delete(id);
+    await this.db.todos.delete(id);
     this.modalControler.set(false);
     this.selectedTodo.set(null);
   }

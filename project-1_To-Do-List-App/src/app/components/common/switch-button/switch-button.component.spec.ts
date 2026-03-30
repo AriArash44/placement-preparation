@@ -9,15 +9,28 @@ describe('SwitchButtonComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SwitchButtonComponent]
-    })
-    .compileComponents();
-
+    }).compileComponents();
     fixture = TestBed.createComponent(SwitchButtonComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('isLeft', true);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should toggle isLeft when onSwitch is called', () => {
+    expect(component.isLeft()).toBeTrue();
+    component.onSwitch();
+    expect(component.isLeft()).toBeFalse();
+    component.onSwitch();
+    expect(component.isLeft()).toBeTrue();
+  });
+
+  it('should emit valueChange on switch', () => {
+    spyOn(component.valueChange, 'emit');
+    component.onSwitch();
+    expect(component.valueChange.emit).toHaveBeenCalledWith(false);
   });
 });

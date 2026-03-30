@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { IconButtonComponent } from './icon-button.component';
 
 describe('IconButtonComponent', () => {
@@ -9,15 +8,20 @@ describe('IconButtonComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [IconButtonComponent]
-    })
-    .compileComponents();
-
+    }).compileComponents();
     fixture = TestBed.createComponent(IconButtonComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('icon', '/icons/list.svg');
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should emit clicked event', () => {
+    spyOn(component.clicked, 'emit');
+    component.onClick();
+    expect(component.clicked.emit).toHaveBeenCalled();
   });
 });

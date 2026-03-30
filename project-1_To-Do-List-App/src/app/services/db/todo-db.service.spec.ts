@@ -12,4 +12,9 @@ describe('Db', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should have todos table', () => {
+  expect(service.todos).toBeTruthy();
+});
+
 });

@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
-import { db } from '../db/todo-db.service';
+import { Injectable, inject } from '@angular/core';
+import { TodoDB } from '../db/todo-db.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeadlineWatcherService {
+  private db = inject(TodoDB);
+
   constructor() {
     setInterval(async () => {
       this.checkOverdueOrNotif();
@@ -31,8 +33,8 @@ export class DeadlineWatcherService {
   }
 
   async checkOverdueOrNotif() {
-    const todos = await db.todos.toArray();
-    const now = new Date();
+    const todos = await this.db.todos.toArray();
+    const now = new Date(Date.now());
     const oneHour = 60 * 60 * 1000;
     for (const todo of todos) {
       if (todo.state === 'done') continue;
@@ -49,10 +51,10 @@ export class DeadlineWatcherService {
           'Deadline soon ⏰',
           `Task "${todo.title}" has less than one hour left`
         );
-        await db.todos.update(todo.id!, { notified: true });
+        await this.db.todos.update(todo.id!, { notified: true });
       }
-      if (now > deadline) {
-        await db.todos.update(todo.id!, { state: 'overdue' });
+      if (now > deadline && todo.state === 'in_progress') {
+        await this.db.todos.update(todo.id!, { state: 'overdue' });
       }
     }
   } 

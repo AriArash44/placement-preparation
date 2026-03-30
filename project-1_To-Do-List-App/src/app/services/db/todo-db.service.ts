@@ -24,5 +24,3 @@ export class TodoDB extends Dexie {
     }); 
   }
 }
-
-export const db = new TodoDB();
