@@ -9,7 +9,7 @@ import { SharedImports } from '../../../../shared-imports';
 })
 export class IconButtonComponent {
   icon = input.required<string>();
-  route = input.required<string>();
+  route = input<string>();
   clicked = output<void>();
 
   onClick() {

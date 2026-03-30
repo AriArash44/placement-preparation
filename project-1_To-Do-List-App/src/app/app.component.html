@@ -1,7 +1,12 @@
 <header class="flex justify-between h-1/12 border-b-2 dark:border-white mb-4">
   <h1 class="dark:text-white">{{ pageTitle() | uppercase}}</h1>
-  <app-switch-button [isLeft]="isLight()" leftIcon="/icons/sun.svg"
-  rightIcon="/icons/moon.svg" (valueChange)="onThemeChange()"></app-switch-button>
+  <div class="flex gap-3">
+    @if (!this.notificationAllowed()) {
+      <app-icon-button class="scale-75 -mt-0.5" icon="/icons/bell.svg" (clicked)="requestPermission()"/>
+    }
+    <app-switch-button [isLeft]="isLight()" leftIcon="/icons/sun.svg" class="mt-1"
+    rightIcon="/icons/moon.svg" (valueChange)="onThemeChange()"></app-switch-button>
+  </div>
 </header>
 <main class="flex justify-center items-center h-5/6 border-b-2 dark:border-white mb-4">
   <router-outlet></router-outlet>

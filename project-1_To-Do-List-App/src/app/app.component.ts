@@ -1,4 +1,4 @@
-import { Component, computed, signal, inject } from '@angular/core';
+import { Component, computed, signal, inject, effect, OnDestroy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { IconButtonComponent } from './components/common/icon-button/icon-button.component';
 import { SwitchButtonComponent } from './components/common/switch-button/switch-button.component';
@@ -14,7 +14,7 @@ import { DeadlineWatcherService } from './services/deadline/deadline-watcher';
   imports: [RouterOutlet, IconButtonComponent, SwitchButtonComponent, UpperCasePipe, ...SharedImports],
   templateUrl: './app.component.html',
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   private router = inject(Router); 
   themeService = inject(ThemeService);
   deadlineWatcherService = inject(DeadlineWatcherService);
@@ -22,6 +22,8 @@ export class AppComponent {
   pageTitle = signal<string>('TODO');
   theme = this.themeService.theme();;
   isLight = computed(() => this.themeService.theme() === 'light');
+  notificationAllowed = signal(Notification.permission === 'granted');
+  private permissionStatus?: PermissionStatus;
 
   constructor() {
     this.router.events
@@ -29,9 +31,11 @@ export class AppComponent {
       .subscribe((event: NavigationEnd) => {
         this.pageTitle.set(event.urlAfterRedirects === '/add' ? 'add' : 'todo');
       });
-    if ('Notification' in window) {
-      Notification.requestPermission();
-    }
+    effect(() => {
+      if (Notification.permission === 'granted' && !this.notificationAllowed()) {
+        this.notificationAllowed.set(true);
+      }
+    });
   }
 
   goTo(route: string) {
@@ -40,5 +44,26 @@ export class AppComponent {
 
   onThemeChange() {
     this.themeService.toggleTheme();
+  }
+
+  requestPermission() {
+    Notification.requestPermission().then(result => {
+      this.notificationAllowed.set(result === 'granted');
+    });
+    if ('permissions' in navigator) {
+      navigator.permissions
+        .query({ name: 'notifications' as PermissionName })
+        .then(status => {
+          this.permissionStatus = status;
+          this.notificationAllowed.set(status.state === 'granted');
+          status.onchange = () => {
+            this.notificationAllowed.set(status.state === 'granted');
+          };
+        });
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.permissionStatus) this.permissionStatus.onchange = null;
   }
 }
