@@ -51,9 +51,3 @@ Below is a preview of the application in both mobile and desktop views across th
 You can visit the live version at [Todo App](https://still-not-deployed.com/)
 
 TODO: deploy and test readme and live site on github pages
-
-TODO: demo pictures are pend of internet for google API fonts
-mobile add: dark theme and shows validation wrong values
-desktop add: successfull adding data light theme
-mobile list: not allowed notification, showing reordering
-dektop list: showing notification for less than one hour
