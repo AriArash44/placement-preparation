@@ -40,12 +40,12 @@ Below is a preview of the application in both mobile and desktop views across th
 
 | Todo List - Mobile                | Todo List - Desktop                                      |
 |--------------------------------------------------------|----------------------------------------------------------|
-| ![Todo List Mobile](./public/images/mobile/list.png)  | ![Todo List Desktop](./public/images/desktop/list.png)  |
+| ![Todo List Mobile](./public/demos/mobile/list.png)  | ![Todo List Desktop](./public/demos/desktop/list.png)  |
 | *Mobile view of the todo list page*                   | *Desktop view of the todo list page*                    |
 
 | Add Todo - Mobile                                      | Add Todo - Desktop                                       |
 |--------------------------------------------------------|----------------------------------------------------------|
-| ![Add Todo Mobile](./public/images/mobile/add.png)    | ![Add Todo Desktop](./public/images/desktop/add.png)    |
+| ![Add Todo Mobile](./public/demos/mobile/add.png)    | ![Add Todo Desktop](./public/demos/desktop/add.png)    |
 | *Mobile view of the add todo page*                    | *Desktop view of the add todo page*                     |
 
 You can visit the live version at [Todo App](https://still-not-deployed.com/)
