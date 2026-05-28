@@ -32,7 +32,7 @@
 </mat-accordion>
 
 <app-modal [(isOpened)]="modalControler">
-  <ng-container [ngTemplateOutlet]="modalContent()" [ngTemplateOutletContext]="modalContext()"></ng-container>
+  <ng-container [ngTemplateOutlet]="modalContent() ?? null" [ngTemplateOutletContext]="modalContext()"></ng-container>
 </app-modal>
 
 <ng-template #deleteFragment let-todo>
