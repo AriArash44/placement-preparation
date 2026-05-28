@@ -4,7 +4,7 @@ This project is the **first suggested idea** from [Placement Preparation - Angul
 
 ## Technologies & Tools
 
-- **Angular 20:**  
+- **Angular 19:**  
   Modern framework for building the application with signals and standalone components.
 
 - **Tailwind CSS:**  
