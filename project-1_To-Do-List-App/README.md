@@ -48,6 +48,4 @@ Below is a preview of the application in both mobile and desktop views across th
 | ![Add Todo Mobile](./public/demos/mobile/add.png)    | ![Add Todo Desktop](./public/demos/desktop/add.png)    |
 | *Mobile view of the add todo page*                    | *Desktop view of the add todo page*                     |
 
-You can visit the live version at [Todo App](https://still-not-deployed.com/)
-
-TODO: deploy and test readme and live site on github pages
+You can visit the live version at [Todo App](https://placement-preparation-rho.vercel.app/)
